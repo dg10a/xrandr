@@ -1957,6 +1957,18 @@ check_crtc_for_output (crtc_t *crtc, output_t *output)
 	/* not on the list, can't clone */
 	if (l == output->output_info->nclone) 
 	    return False;
+
+    /* make sure the state matches the clone's state */
+    if (other->mode_info != output->mode_info)
+        return False;
+    if (other->x != output->x)
+        return False;
+    if (other->y != output->y)
+        return False;
+    if (other->rotation != output->rotation)
+        return False;
+    if (!equal_transform (&other->transform, &output->transform))
+        return False;
     }
 
     if (crtc->noutput)
